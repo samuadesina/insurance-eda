@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldGuard Insurance — EDA Report</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6f9;
+            color: #2c3e50;
+            padding: 40px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a3c5e, #2980b9);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .header p  { font-size: 14px; opacity: 0.85; }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #1a3c5e;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            font-size: 14px;
+            color: #2980b9;
+            margin: 18px 0 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        th {
+            background: #1a3c5e;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        td.label {
+            font-weight: 600;
+            color: #555;
+            width: 220px;
+        }
+        tr:hover td { background: #f8f9fa; }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.reject { background: #fdecea; color: #c0392b; }
+        .badge.fail    { background: #eafaf1; color: #27ae60; }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ ShieldGuard Insurance Group — EDA Report</h1>
+        <p>Lead Data Analyst Report &nbsp;|&nbsp; Loss Ratio Analysis &nbsp;|&nbsp;
+           Generated: 2026-05-25 05:24</p>
+    </div>
+
+    
+        <div class="section">
+            <h2>1. Dataset Overview</h2>
+            <table><tr><td class='label'>Total Records</td><td>20,004</td></tr><tr><td class='label'>Columns</td><td>49</td></tr><tr><td class='label'>Numeric Columns</td><td>17</td></tr><tr><td class='label'>Categorical Columns</td><td>23</td></tr><tr><td class='label'>Missing Values</td><td>0 (0.0%)</td></tr><tr><td class='label'>Duplicate Rows</td><td>0</td></tr><tr><td class='label'>Memory Usage</td><td>35.33 MB</td></tr></table>
+        </div>
+        
+    
+        <div class="section">
+            <h2>2. Claim Amount by Risk Grade (ANOVA + Kruskal-Wallis)</h2>
+            
+            <h3>One-Way ANOVA</h3>
+            <table><tr><td class='label'>Test</td><td>One-Way ANOVA</td></tr><tr><td class='label'>Groups</td><td>risk_grade (4 groups)</td></tr><tr><td class='label'>Target</td><td>amount_claimed</td></tr><tr><td class='label'>F-statistic</td><td>2.3813</td></tr><tr><td class='label'>p-value</td><td>0.067485</td></tr><tr><td class='label'>Result</td><td><span class='badge fail'>FAIL TO REJECT H₀ — Not Significant</span></td></tr><tr><td class='label'>Conclusion</td><td>FAIL TO REJECT H₀ — no significant difference in 'amount_claimed' across 'risk_grade' groups (p=0.0675). Consider kruskal_test() if distributions are non-normal.</td></tr></table>
+            <h3>Kruskal-Wallis (Non-Parametric)</h3>
+            <table><tr><td class='label'>Test</td><td>Kruskal-Wallis</td></tr><tr><td class='label'>H-statistic</td><td>7.0427</td></tr><tr><td class='label'>p-value</td><td>0.070549</td></tr><tr><td class='label'>Result</td><td><span class='badge fail'>FAIL TO REJECT H₀ — Not Significant</span></td></tr><tr><td class='label'>Conclusion</td><td>FAIL TO REJECT H₀ — no significant difference in 'amount_claimed' distributions across 'risk_grade' groups (p=0.0705).</td></tr></table>
+        
+        </div>
+        
+    
+        <div class="section">
+            <h2>3. Feature Importance — amount_approved</h2>
+            
+            <p>Target: <strong>amount_approved</strong></p>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Pearson r</th>
+                    <th>Strength</th>
+                    <th>Direction</th>
+                </tr>
+                <tr><td>amount_claimed</td><td>0.6319</td><td>MODERATE</td><td>positive</td></tr><tr><td>agent_id</td><td>0.0186</td><td>NEGLIGIBLE</td><td>positive</td></tr><tr><td>premium_monthly</td><td>0.0131</td><td>NEGLIGIBLE</td><td>positive</td></tr><tr><td>years_exp</td><td>-0.0120</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>credit_score</td><td>-0.0108</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>assessment_id</td><td>-0.0101</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>policy_id</td><td>-0.0100</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>claim_id</td><td>0.0046</td><td>NEGLIGIBLE</td><td>positive</td></tr><tr><td>recommended_premium</td><td>-0.0041</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>annual_income</td><td>0.0036</td><td>NEGLIGIBLE</td><td>positive</td></tr><tr><td>commission_rate</td><td>0.0035</td><td>NEGLIGIBLE</td><td>positive</td></tr><tr><td>customer_id</td><td>-0.0031</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>deductible</td><td>0.0021</td><td>NEGLIGIBLE</td><td>positive</td></tr><tr><td>customer_risk_score</td><td>-0.0013</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>coverage_amount</td><td>-0.0006</td><td>NEGLIGIBLE</td><td>negative</td></tr><tr><td>assessed_risk_score</td><td>-0.0001</td><td>NEGLIGIBLE</td><td>negative</td></tr>
+            </table>
+        
+        </div>
+        
+    
+        <div class="section">
+            <h2>4. Claim Volume Forecast</h2>
+            <table><tr><td class='label'>Method</td><td>SimpleExpSmoothing</td></tr><tr><td class='label'>Periods Used</td><td>72</td></tr><tr><td class='label'>Last Period</td><td>2024-12 — 283 claims</td></tr><tr><td class='label'>Next Period</td><td><strong style="color:#27ae60">281 claims (-0.5%)</strong></td></tr><tr><td class='label'>Smoothing α</td><td>0.1066</td></tr><tr><td class='label'>Interpretation</td><td>Claim volume is forecast to decrease by 0.53% next period (from 283 to 281 claims). Declining claim volume may reflect seasonal patterns or improved underwriting controls.</td></tr></table>
+        </div>
+        
+    
+        <div class="section">
+            <h2>5. Fraud Pattern Summary</h2>
+            <table><tr><td class='label'>Total Claims</td><td>20,004</td></tr><tr><td class='label'>Fraudulent Claims</td><td>802 (4.01%)</td></tr><tr><td class='label'>Legitimate Claims</td><td>19,202</td></tr><tr><td class='label'>High-Value Fraud</td><td>0 (detectable)</td></tr><tr><td class='label'>Evasive Fraud</td><td><strong style="color:#c0392b">802 (priority for review)</strong></td></tr><tr><td class='label'>Fraud Mean Amount</td><td>£258,801.18</td></tr><tr><td class='label'>Legit Mean Amount</td><td>£250,943.14</td></tr></table>
+                <h3>Fraud Rate by Claim Type</h3>
+                <table>
+                    <tr><th>Claim Type</th><th>Fraud Count</th><th>Fraud Rate</th></tr>
+                    <tr><td>Liability</td><td>113</td><td>4.53%</td></tr><tr><td>Disability</td><td>108</td><td>4.49%</td></tr><tr><td>Medical</td><td>108</td><td>4.45%</td></tr><tr><td>Natural Disaster</td><td>101</td><td>4.2%</td></tr><tr><td>Theft</td><td>96</td><td>3.95%</td></tr><tr><td>Unknown</td><td>23</td><td>3.83%</td></tr><tr><td>Property Damage</td><td>92</td><td>3.78%</td></tr><tr><td>Travel Disruption</td><td>86</td><td>3.59%</td></tr><tr><td>Auto Accident</td><td>75</td><td>3.11%</td></tr>
+                </table>
+            
+                <h3>Fraud Rate by Risk Grade</h3>
+                <table>
+                    <tr><th>Risk Grade</th><th>Fraud Count</th><th>Fraud Rate</th></tr>
+                    <tr><td>A</td><td>281</td><td>4.25%</td></tr><tr><td>D</td><td>137</td><td>4.17%</td></tr><tr><td>B</td><td>259</td><td>3.87%</td></tr><tr><td>C</td><td>125</td><td>3.65%</td></tr>
+                </table>
+            
+        </div>
+        
+    
+        <div class="section">
+            <h2>6. Anomaly Summary</h2>
+            <table><tr><th>metric</th><th>value</th></tr><tr><td>Total claims</td><td>20004.0</td></tr><tr><td>Fraudulent claims</td><td>802.0</td></tr><tr><td>Legitimate claims</td><td>19202.0</td></tr><tr><td>Fraud rate (%)</td><td>4.01</td></tr><tr><td>High-value fraud</td><td>0.0</td></tr><tr><td>Evasive fraud</td><td>802.0</td></tr><tr><td>Fraud mean amount</td><td>258801.18</td></tr><tr><td>Legit mean amount</td><td>250943.14</td></tr><tr><td>Fraud median amount</td><td>260166.72</td></tr><tr><td>Legit median amount</td><td>250386.34</td></tr></table>
+        </div>
+        
+
+    <div class="footer">
+        ShieldGuard Insurance Group &nbsp;|&nbsp; Confidential &nbsp;|&nbsp;
+        Sam Adesina — Lead Data Analyst
+    </div>
+</body>
+</html>
